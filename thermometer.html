@@ -1,0 +1,190 @@
+<html>
+
+<head>
+  <title>Thermometer Lab</title>
+</head>
+
+<body>
+  <h1>Thermometer Lab</h1>
+  <div>
+    <svg version="1.1" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" height="50%" width="75%">
+      <style>
+        #glass {
+          fill: #ffffff;
+          stroke: #000000;
+          stroke-width: 3;
+        }
+
+        #container {
+          fill: #ffffff;
+          stroke: #000000;
+          stroke-width: 5;
+        }
+
+        #liquid {
+          fill: #59aee3;
+          stroke: #59aee3;
+          stroke-width: 3;
+        }
+
+        #shine {
+          stroke-width: 2;
+          stroke: white;
+          fill: #59aee3;
+        }
+        
+        #hotlabels {
+          font-size: xx-small;
+          stroke: red;
+        }
+
+        #warmlabels {
+          font-size: xx-small;
+          stroke: orange;
+        }
+
+        #coldlabels {
+          font-size: xx-small;
+          stroke: blue;
+        }
+
+
+      </style>
+
+      <rect id="container" x="10" y="10" width="100" height="210" rx="15" />
+
+      <g id="glass">
+        <rect x="45" y="20" width="30" height="160" rx="15" />
+        <ellipse cx="60" cy="180" rx="30" ry="30" />
+        <rect x="46.5" y="22" width="27" height="165" rx="15" stroke="none" />
+      </g>
+
+      <g id="liquid">
+        <ellipse id= "base" cx="60" cy="180" rx="20" ry="20" />
+        <rect id = "temp" x="50" y="160" width="20" height="0" rx="15" stroke="none" />
+      </g>
+
+      <g id="shine">
+        <path id= "bigshine" d=" M 54 199 A 20 17 54 0 1 46 167" />
+        <path id= "smallshine" d=" M 50 164 A 20 17 54 0 1 67 163" />
+      </g>
+    
+    <!--Labels-->
+    <g id="hotlabels"> 
+      <text class = "label" x="93" y="27" text-anchor = "right" id = "1tick">212</text>
+      <text class  = "label" x="93" y="52" text-anchor="right" id = "2tick">176</text>
+      <text class= "label" x="93" y="79" text-anchor="right" id="3tick">140</text>
+    </g>
+
+    <g id="warmlabels">
+      
+      <text class="label" x="93" y="104" text-anchor="right" id = "4tick">104</text>
+      <text class= "label" x="93" y="130" text-anchor  ="right" id ="5tick">68</text>
+    </g>
+
+    <g id="coldlabels">
+      
+      <text class="label" x= "93" y="156" text-anchor="right" id= "6tick">32</text>
+    </g>
+
+      <!--Tickmarks-->
+      <rect x = "80" y = "23" width = "12" height = "2" fill = "green" />
+      <rect x = "80" y = "36" width = "6" height = "2" fill = "green" />
+      <rect x = "80" y = "49" width = "12" height = "2" fill = "green"/>
+      <rect x = "80" y = "62" width = "6" height = "2" fill = "green" />
+      <rect x = "80" y = "75" width = "12" height = "2" fill = "green"/>
+      <rect x = "80" y ="88" width= "6"height= "2" fill = "green"/>
+      <rect x= "80" y ="101" width="12"  height="2" fill =  "green" />
+      <rect x= "80"  y="114" width ="6" height = "2" fill = "green" />
+      <rect x = "80" y = "127" width = "12" height = "2" fill = "green" />
+      <rect x = "80" y="140" width= "6" height = "2" fill = "green"/>
+      <rect x="80" y = "153" width = "12" height = "2" fill="green"/>
+
+    </svg>
+
+  </div>
+
+  <div class="slider">
+    <input type="range" min="10" max="121" value="0" class="slider" id="Slider" onchange="heightChange()">
+  </div>
+  <br>
+  <div>
+    <input type="radio" id="Celsius" name="Temp" value="celsius" onchange="unit('c')">
+    <label for="celsius">Celsius</label> <br><br>
+    <input type="radio" id="Fahrenheit" name="Temp" value="Fahrenheit" onchange="unit('f')">
+    <label for = "Fahrenheit">Fahrenheit</label>
+  </div>
+
+  <script> 
+      //Thermometer liquid color change function
+      function heightChange(){
+
+      let temperature = document.getElementById("Slider").value;
+      let mercuryHeight = (temperature/118)*160
+
+      document.getElementById("temp").setAttribute("height", mercuryHeight) 
+      document.getElementById("temp").setAttribute("y", 25 + (160 - mercuryHeight)) 
+      
+      if (mercuryHeight > 110){ 
+
+        document.getElementById("temp").setAttribute("fill", "red")
+        document.getElementById("base").setAttribute("fill", "red")
+        document.getElementById("base").setAttribute("stroke", "red")
+        document.getElementById("bigshine").setAttribute("fill", "red")
+        document.getElementById("smallshine").setAttribute("fill", "red")
+
+      }
+
+      else if (mercuryHeight > 50) { 
+        
+        document.getElementById("temp").setAttribute("fill", "orange")
+        document.getElementById("base").setAttribute("fill", "orange")
+        document.getElementById("base").setAttribute("stroke", "orange")
+        document.getElementById("bigshine").setAttribute("fill", "orange")
+        document.getElementById("smallshine").setAttribute("fill", "orange")
+
+      }
+
+      else {
+        
+        document.getElementById("temp").setAttribute("fill", "#59aee3")
+        document.getElementById("base").setAttribute("fill", "#59aee3")
+        document.getElementById("base").setAttribute("stroke", "#59aee3")
+        document.getElementById("bigshine").setAttribute("fill", "#59aee3")
+        document.getElementById("smallshine").setAttribute("fill", "#59aee3")
+
+      }
+    }
+
+    //Unit change function
+    function unit(k){
+
+      if (k == 'f'){
+
+        document.getElementById("1tick").textContent = "212"
+        document.getElementById("2tick").textContent = "176"
+        document.getElementById("3tick").textContent = "140"
+        document.getElementById("4tick").textContent = "104"
+        document.getElementById("5tick").textContent = "68"
+        document.getElementById("6tick").textContent = "32"
+
+      }
+
+      if(k == 'c'){
+
+        document.getElementById("1tick").textContent = "100"
+        document.getElementById("2tick").textContent = "80"
+        document.getElementById("3tick").textContent = "60"
+        document.getElementById("4tick").textContent = "40"
+        document.getElementById("5tick").textContent = "20"
+        document.getElementById("6tick").textContent = "0"
+
+      }
+
+    }
+  
+  </script>
+
+</body>
+
+</html>
